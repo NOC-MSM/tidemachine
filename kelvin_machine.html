@@ -442,6 +442,24 @@
                             tr.appendChild(td);
                         }
                     }
+                    <!--- USER DEFINE INPUT -->
+                    let tr0 = document.createElement('TR');
+                    tableBody.appendChild(tr0);
+
+                    let td0 = document.createElement('TD');
+                    td0.width = '150';
+                    td0.appendChild(document.createTextNode("user" ));
+                    tr0.appendChild(td0);
+
+                    for (let jconstit = 0; jconstit < phaseName.length; jconstit++) {
+                        let td0 = document.createElement('TD');
+                        td0.width = '50';
+                        td0.appendChild(document.createTextNode( coefs[2][jconstit] ));
+                        //td0.appendChild(document.createElement( "input" ));
+                        tr0.appendChild(td0);
+                    }
+                    <!-- END USER DEFINED INPUT -->
+
                     table.style.fontFamily = "Courier";
                     table.style.fontSize = "smaller";
                     myTableDiv.appendChild(table);
