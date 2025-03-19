@@ -354,6 +354,31 @@
             if (isDrawing) setTimeout("DrawFrame()",20);
         }
 
+        function updateUserCoefs()
+        {
+            // Get the input value
+            let input = document.getElementById("userCoefsInput").value;
+
+            // Parse the input into an array of floating-point numbers
+            let userCoefs = input.split(',').map(Number);
+
+            // Validate the input (ensure it matches the number of phases)
+            if (userCoefs.length !== phaseName.length || userCoefs.some(isNaN)) {
+                alert(`Please enter exactly ${phaseName.length} valid numbers, separated by commas.`);
+                return;
+            }
+
+            // Update the last row of the coefs array
+            coefs[2] = userCoefs;
+
+            // Update the table to reflect the new values
+            let tableDiv = document.getElementById("myDynamicConstituentTable");
+            tableDiv.innerHTML = ""; // Clear the existing table
+            addTable(); // Recreate the table with updated values
+
+            alert("User-defined coefficients updated successfully!");
+        }
+
     </script>
 
     <title>Kelvin Tidal Machine</title>
@@ -442,23 +467,7 @@
                             tr.appendChild(td);
                         }
                     }
-                    <!--- USER DEFINE INPUT -->
-                    let tr0 = document.createElement('TR');
-                    tableBody.appendChild(tr0);
 
-                    let td0 = document.createElement('TD');
-                    td0.width = '150';
-                    td0.appendChild(document.createTextNode("user" ));
-                    tr0.appendChild(td0);
-
-                    for (let jconstit = 0; jconstit < phaseName.length; jconstit++) {
-                        let td0 = document.createElement('TD');
-                        td0.width = '50';
-                        td0.appendChild(document.createTextNode( coefs[2][jconstit] ));
-                        //td0.appendChild(document.createElement( "input" ));
-                        tr0.appendChild(td0);
-                    }
-                    <!-- END USER DEFINED INPUT -->
 
                     table.style.fontFamily = "Courier";
                     table.style.fontSize = "smaller";
@@ -468,6 +477,12 @@
             </script>
 
 
+            <!-- Place the user defined input box and button -->
+            <div>
+                <label for="userCoefsInput">Enter user defined amplitudes (comma-separated):</label>
+                <input type="text" id="userCoefsInput" placeholder="e.g., 2.0, 1.5, 0.8, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0">
+                <button onclick="updateUserCoefs()">Update Table</button>
+            </div>
 
             <p>ADD Words about origins of constituents (semi-diurnal / diurnal / shallow-water)</p>
             <p>ADD Words highlighting key features of Liverpool (large semi-diurnal), Southampton (double highs)</p>
@@ -475,7 +490,7 @@
             Adapted from a <a href="https://www.ams.org/publicoutreach/feature-column/fcarc-tidesiii3">Feature column
             from the American Mathematical Society</a> on ocean tides.
             Java originally contributed by Bill Casselman of the University of British Columbia.
-            Adaptions modified the presentation: units, constituents, locations, direction of time.
+            Adaptions: modified the presentation (units, constituents, locations, direction of time) and user defined input (JPolton, National Oceanography Centre).
 
         </div>
     </div>
